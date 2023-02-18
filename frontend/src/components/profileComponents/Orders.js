@@ -14,7 +14,7 @@ const Orders = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className={"alert-success"}>
+                    <tr className="alert alert-success" role="alert">
                         <td>
                             <a href={"/"} className="link">
                                 1
@@ -24,7 +24,7 @@ const Orders = () => {
                         <td>Dec 12 2021</td>
                         <td>RSD 2500</td>
                     </tr>
-                    <tr className={"alert-danger"}>
+                    <tr className="alert alert-danger" role="alert">
                         <td>
                             <a href={'/'} className="link">
                                 2

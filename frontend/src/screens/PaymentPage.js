@@ -25,7 +25,7 @@ const PaymentPage = () => {
             </div>
           </div>
           <button type="submit">
-            <Link to="/placeholder" cassName="text-white">
+            <Link to="/placeorder" cassName="text-white">
               Continue
             </Link>
           </button>

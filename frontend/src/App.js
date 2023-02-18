@@ -1,8 +1,8 @@
 import React from "react";
-import "./App.css"
-import "./responsive.css"
+import "./App.css";
+import "./responsive.css";
 import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./screens/HomePage";
 import SigngleProduct from "./screens/SingleProduct";
 import Login from "./screens/Login";
@@ -15,24 +15,25 @@ import PlaceOrderPage from "./screens/PlaceOrderPage";
 import OrderPage from "./screens/OrderPage";
 import NotFound from "./screens/NotFound";
 
-const App = ()=>{
-    return (
-        <Router>
-            <Switch>
-                <Route path="/" component={HomePage} exact />
-                <Route path="/product/:id" component={SigngleProduct} />
-                <Route path="/login" component={Login}/>
-                <Route path="/register" component={Register}/>
-                <Route path="/profile" component={ProfilePage}/>
-                <Route path="/cart/:id?" component={CartPage}/>
-                <Route path="/shipping" component={ShippingPage}/>
-                <Route path="/payment" component={PaymentPage}/>
-                <Route path="/placeorder" component={PlaceOrderPage}/>
-                <Route path="/order" component={OrderPage}/>
-                <Route path="*" component={NotFound}/>
-
-            </Switch>
-        </Router>
-    );
+const App = () => {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} exact />
+          <Route path="/products/:id" element={<SigngleProduct />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/cart/:id?" element={<CartPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/placeorder" element={<PlaceOrderPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 };
 export default App;

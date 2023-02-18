@@ -115,7 +115,7 @@ const PlaceOrderPage = () => {
               </tbody>
             </table>
             <button type="submit" onClick={placeOrderHandler}>
-              <Link to="/order" className="text-white">
+              <Link to="/order" className="btn btn-primary">
                 Place Order
               </Link>
             </button>

@@ -16,12 +16,12 @@ const CartPage = ()=>{
                         (4)
                     </Link>
                 </div>
-                <div className="cart-iterm row">
+                <div className="cart-item row">
                     <div className="remove-button d-flex justify-content-center align-items-center">
                         <i className="fas fa-times"></i>
                     </div>
                     <div className="cart-image col-md-3">
-                        <image src="" alt="" />
+                        <img src="" alt="" />
                     </div>
                     <div className="cart-text col-md-5 d-flex align-items-center">
                         <Link to="#">

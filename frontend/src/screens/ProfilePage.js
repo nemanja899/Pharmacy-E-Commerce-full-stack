@@ -10,13 +10,14 @@ const ProfilePage = () => {
     <>
       <Header />
       <div className="container mt-lg-5 mt-3">
-        <div className="row align-items-start">
+        <div className="row align-items-start d-flex justify-content-between">
           <div className="col-lg-4 p-0 shadow">
             <div className="author-card pb-0 pb-md-3">
               <div className="author-card-cover">
+              </div>
                 <div className="author-card-profile row">
                   <div className="author-card-avatar col-md-5">
-                    <img src="./images/user.png" alt="userprofileimage" />
+                    <img src="https://th.bing.com/th/id/R.1f50774ba6657e78fb80b2268ebbffa7?rik=v%2fA1aFUv5qRwog&pid=ImgRaw&r=0" alt="userprofileimage" />
                   </div>
                   <div className="author-card-details col-md-7">
                     <h5 className="author-card-name mb-2">
@@ -27,7 +28,7 @@ const ProfilePage = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              
               <div className="wizard pt-3">
                 <div className="d-flex align-items-start">
                   <div
@@ -37,7 +38,7 @@ const ProfilePage = () => {
                     aria-orientation="vertical"
                   >
                     <button
-                      class="nav-link active"
+                      className="nav-link active"
                       id="v-pills-home-tab"
                       data-bs-toggle="pill"
                       data-bs-target="#v-pills-home"
@@ -49,7 +50,7 @@ const ProfilePage = () => {
                       Profile Settings
                     </button>
                     <button
-                      class="nav-link d-flex justify-content-between"
+                      className="nav-link d-flex justify-content-between"
                       id="v-pills-profile-tab"
                       data-bs-toggle="pill"
                       data-bs-target="#v-pills-profile"
@@ -65,11 +66,26 @@ const ProfilePage = () => {
                 </div>
               </div>
             </div>
-
-            <div className="tab-content col-lg-8 pb-5 pt-lg-0 pt-3"
-            id="v-pills-tabContent">
-                <ProfileTabs />
-                <Orders />
+          </div>
+          <div
+            className="tab-content col-lg-8 pb-5 pt-lg-0 pt-3"
+            id="v-pills-tabContent"
+          >
+            <div
+              className="tab-pane show active"
+              id="v-pills-home"
+              aria-labelledby="v-pills-home-tab"
+              role="tabpanel"
+            >
+              <ProfileTabs />
+            </div>
+            <div
+              className="tab-pane"
+              id="v-pills-profile"
+              aria-labelledby="v-pills-profile-tab"
+              role="tabpanel"
+            >
+              <Orders />
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ const ShippingPage = () => {
           <input type="text" placeholder="Enter postal code"></input>
           <input type="text" placeholder="Enter Country"></input>
           <button type="submit">
-            <Link to="/payment" className="text-white">
+            <Link to="/payment" className="btn btn-primary mt-2">
               Continue
             </Link>
           </button>

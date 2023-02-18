@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "./../components/Header";
-import { PayPalButton } from "./../components/PayPalButton";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const OrderPage = () => {
   window.scrollTo(0, 0);
