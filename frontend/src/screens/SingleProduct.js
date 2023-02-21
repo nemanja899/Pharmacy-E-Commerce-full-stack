@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Rating from "../components/homeComponents/Rating";
-import { Link, useParams,useNavigate  } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Message from "./../components/LoadingError/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { productDetails } from "../Redux/Actions/ProductActions";
 import Loading from "../components/LoadingError/Loading";
 
 const SigngleProduct = () => {
-  const history = useNavigate()
+  const history = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const product_Details = useSelector((state) => state.productDetails);
-const [qty,setQty]= useState(1);
+  const [qty, setQty] = useState(1);
 
   const { loading, error, product } = product_Details;
   useEffect(() => {
     dispatch(productDetails(id));
   }, [id, dispatch]);
 
-  const AddToCartHander= (e)=>{
+  const AddToCartHander = (e) => {
     e.preventDefault();
     history(`/cart/${id}?qty=${qty}`);
-  }
+  };
   return (
     <>
       <Header />
@@ -71,7 +71,15 @@ const [qty,setQty]= useState(1);
                       <>
                         <div className="flex-box d-flex justify-content-between align-items-column">
                           <h6>Quantity</h6>
-                          <select>
+                          <select name="qty" value={qty}
+                            onChange={(e) => {
+                              if (e.target.name === "qty") {
+                                setQty(e.target.value);
+                               
+                              }
+                              
+                            }}
+                          >
                             {[...Array(product.countInStock).keys()].map(
                               (x) => (
                                 <option key={x + 1} value={x + 1}>
@@ -81,7 +89,12 @@ const [qty,setQty]= useState(1);
                             )}
                           </select>
                         </div>
-                        <button onClick={AddToCartHander} className="round-black-btn">Add To cart</button>
+                        <button
+                          onClick={AddToCartHander}
+                          className="round-black-btn"
+                        >
+                          Add To cart
+                        </button>
                       </>
                     ) : null}
                   </div>
@@ -112,11 +125,11 @@ const [qty,setQty]= useState(1);
                     <strong>Rating</strong>
                     <select className="col-12 bg-light p-3 mt-2 border-0 rounded">
                       <option value="">Select...</option>
-                      <option value="">1</option>
-                      <option value="">2</option>
-                      <option value="">3</option>
-                      <option value="">4</option>
-                      <option value="">5</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
                     </select>
                   </div>
                   <div className="my-4">

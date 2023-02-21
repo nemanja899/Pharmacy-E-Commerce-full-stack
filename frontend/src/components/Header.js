@@ -9,8 +9,11 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const cart=useSelector(state=>state.cart);
+  const {cartItems}=cart;
   return (
     <div>
       <nav className="navbar">
@@ -84,7 +87,7 @@ const Header = () => {
                   </div>
                   <Link to="/cart" className="cart-mobile-icon">
                     <i className="fas fa-shopping-bag"></i>
-                    <span className="badge">4</span>
+                    <span className="badge">{cartItems.length}</span>
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
@@ -148,7 +151,7 @@ const Header = () => {
                 </div>
                 <Link to="/cart" className="cart-pc-icon d-flex">
                   <i className="fas fa-shopping-bag"></i>
-                  <span className="badge">4</span>
+                  <span className="badge">{cartItems.length}</span>
                 </Link>
               </div>
             </div>

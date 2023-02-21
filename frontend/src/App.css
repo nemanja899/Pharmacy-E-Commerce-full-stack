@@ -561,7 +561,14 @@ input:focus,select:focus,textarea:focus{
     text-transform: uppercase;
     margin-right: 20px;
 }
+.cart-price h6,.cart-price h4{
+   
+    align-self: center;
+}
 
+.cart-price h4{
+    padding-left: 0.5rem;
+}
 .total .total-price{
     font-size:20px;
     color: black;
