@@ -9,11 +9,18 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import { IconContext } from "react-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../Redux/Actions/UserActions";
 
 const Header = () => {
-  const cart=useSelector(state=>state.cart);
-  const {cartItems}=cart;
+  const dispatch= useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const logoutHandler=(e)=>{
+    dispatch(logout());
+  }
   return (
     <div>
       <nav className="navbar">
@@ -32,9 +39,7 @@ const Header = () => {
           </div>
         </div>
         <div className="navbar__right">
-          <IconContext.Provider
-            value={{className: "Soc-link" }}
-          >
+          <IconContext.Provider value={{ className: "Soc-link" }}>
             <a href="https://www.facebook.com">
               <FaFacebook />
             </a>
@@ -58,33 +63,65 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-end Login">
-                  <div className="btn-group">
-                    <button
-                      id="dropdownMenuButton2"
-                      type="button"
-                      className="name-button dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i className="fas fa-user"></i>
-                    </button>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton2"
-                    >
-                      <li>
-                        <Link className="dropdown-item" to="/profile">
-                          Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="#">
-                          Logout
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                  {userInfo ? (
+                    <div className="btn-group">
+                      <button
+                        id="dropdownMenuButton2"
+                        type="button"
+                        className="name-button dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i className="fas fa-user"></i>
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton2"
+                      >
+                        <li>
+                          <Link className="dropdown-item" to="/profile">
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" to="#"
+                          onClick={logoutHandler}>
+                            Logout
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="btn-group">
+                      <button
+                        id="dropdownMenuButton2"
+                        type="button"
+                        className="name-button dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i className="fas fa-user"></i>
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton2"
+                      >
+                        <li>
+                          <Link className="dropdown-item" to="/login">
+                            Login
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" to="/register">
+                            Register
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+
                   <Link to="/cart" className="cart-mobile-icon">
                     <i className="fas fa-shopping-bag"></i>
                     <span className="badge">{cartItems.length}</span>
@@ -125,30 +162,43 @@ const Header = () => {
                 </form>
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end Login">
-                <div className="btn-group">
-                  <button
-                    id="dropdownMenuButton"
-                    type="button"
-                    className="name-button dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Hi,Admin Doe
-                  </button>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton"
-                  >
-                    <Link className="dropdown-item" to="/profile">
-                      Profile
-                    </Link>
+                {userInfo ? (
+                  <div className="btn-group">
+                    <button
+                      id="dropdownMenuButton"
+                      type="button"
+                      className="name-button dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {userInfo.name}
+                    </button>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
 
-                    <Link className="dropdown-item" to="#">
-                      Logout
-                    </Link>
+                      <Link className="dropdown-item" to="#"
+                      onClick={logoutHandler}>
+                        Logout
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <div className="">
+                      <Link to="/register">REGISTER</Link>
+                    </div>
+                    <div className="mx-2">
+                      <Link to="/login">LOGIN</Link>
+                    </div>
+                  </>
+                )}
+
                 <Link to="/cart" className="cart-pc-icon d-flex">
                   <i className="fas fa-shopping-bag"></i>
                   <span className="badge">{cartItems.length}</span>
