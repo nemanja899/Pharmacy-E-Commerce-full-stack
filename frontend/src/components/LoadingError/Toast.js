@@ -8,7 +8,7 @@ const Toast= () =>{
             position="top-right"
             hideProgressBar={false}
             newestOnTop={false}
-            closeOnClick
+            closeOnClick={true}
             rtl={false}
             >
 

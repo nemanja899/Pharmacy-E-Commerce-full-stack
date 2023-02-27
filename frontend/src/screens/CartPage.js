@@ -28,7 +28,7 @@ const CartPage = () => {
 
 
   const checkOutHandler=(e)=>{
-    history("/login?redirect=shipping");
+    history("/login",{state:{redirect:"shipping"}});
   }
   const removeFromCartHandler=(id)=>{
     dispatch(removeFromCart(id));

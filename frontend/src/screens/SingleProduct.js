@@ -4,24 +4,58 @@ import Rating from "../components/homeComponents/Rating";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Message from "./../components/LoadingError/Error";
 import { useDispatch, useSelector } from "react-redux";
-import { productDetails } from "../Redux/Actions/ProductActions";
+import {
+  productCreateReviews,
+  productDetails,
+} from "../Redux/Actions/ProductActions";
 import Loading from "../components/LoadingError/Loading";
+import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
+import moment from "moment";
 
 const SigngleProduct = () => {
   const history = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const product_Details = useSelector((state) => state.productDetails);
+  const productCreateReview = useSelector((state) => state.productCreateReview);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const { loading, error, product } = product_Details;
+  const {
+    loading: createReviewLoading,
+    error: createReviewError,
+    success: successCreateReview,
+  } = productCreateReview;
   useEffect(() => {
+    if (successCreateReview) {
+      alert("Review submitted");
+      setRating(0);
+      setComment("");
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
     dispatch(productDetails(id));
-  }, [id, dispatch]);
+  }, [id, dispatch, successCreateReview]);
+
+  useEffect(() => {
+    if (createReviewError) {
+      setTimeout(() => {
+        dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+      }, 5000);
+    }
+  }, [createReviewError]);
 
   const AddToCartHander = (e) => {
     e.preventDefault();
     history(`/cart/${id}?qty=${qty}`);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(productCreateReviews(id, { rating, comment }));
   };
   return (
     <>
@@ -71,13 +105,13 @@ const SigngleProduct = () => {
                       <>
                         <div className="flex-box d-flex justify-content-between align-items-column">
                           <h6>Quantity</h6>
-                          <select name="qty" value={qty}
+                          <select
+                            name="qty"
+                            value={qty}
                             onChange={(e) => {
                               if (e.target.name === "qty") {
                                 setQty(e.target.value);
-                               
                               }
-                              
                             }}
                           >
                             {[...Array(product.countInStock).keys()].map(
@@ -104,56 +138,76 @@ const SigngleProduct = () => {
             <div className="row my-5">
               <div className="col-md-6">
                 <h6 className="mb-3">Reviews</h6>
-                <Message variant={"alert-info mt-3"}>No Reviews</Message>
-                <div className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded">
-                  <strong>Admin Doe</strong>
-                  <Rating value={5} />
-                  <span>Jan 23 2441</span>
-                  <div className="alert alert-info mt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
-                    impedit minus aspernatur nobis libero pariatur quaerat,
-                    natus unde cum vel eius ipsum voluptates nostrum saepe
-                    expedita eaque. Possimus, veritatis culpa.
+                {product.reviews.length === 0 && (
+                  <Message variant={"alert-info mt-3"}>No Reviews</Message>
+                )}
+                {product.reviews.map((review) => (
+                  <div
+                    key={review._id}
+                    className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded"
+                  >
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <span>{moment(review.createdAt).calendar()}</span>
+                    <div className="alert alert-info mt-3">
+                      {review.comment}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
               <div className="col-md-6">
                 <h6>Write a customer review</h6>
                 <div className="my-4"></div>
-                <form>
-                  <div className="my-4">
-                    <strong>Rating</strong>
-                    <select className="col-12 bg-light p-3 mt-2 border-0 rounded">
-                      <option value="">Select...</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                  </div>
-                  <div className="my-4">
-                    <strong>Comment</strong>
-                    <textarea
-                      row="3"
-                      className="col-12 bg-light p-3 mt-2 border-0 rounded"
-                    ></textarea>
-                  </div>
+                {createReviewLoading && <Loading></Loading>}
+                {createReviewError && (
+                  <Message variant="alert-danger">{createReviewError}</Message>
+                )}
+                {userInfo ? (
+                  <form onSubmit={submitHandler}>
+                    <div className="my-4">
+                      <strong>Rating</strong>
+                      <select
+                        value={rating}
+                        onChange={(e) => setRating(Number(e.target.value))}
+                        className="col-12 bg-light p-3 mt-2 border-0 rounded"
+                      >
+                        <option value="">Select...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+                    <div className="my-4">
+                      <strong>Comment</strong>
+                      <textarea
+                        row="3"
+                        className="col-12 bg-light p-3 mt-2 border-0 rounded"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                    </div>
+                    <div className="my-3">
+                      <button
+                        disabled={createReviewLoading}
+                        className="col-12 bg-black border-0 p-3 rounded text-white"
+                      >
+                        SUBMIT
+                      </button>
+                    </div>
+                  </form>
+                ) : (
                   <div className="my-3">
-                    <button className="col-12 bg-black border-0 p-3 rounded text-white">
-                      SUBMIT
-                    </button>
+                    <Message variant={"alert-warning"}>
+                      Please{" "}
+                      <Link to="/login">
+                        "<strong>Login</strong>"
+                      </Link>{" "}
+                      to write a review{" "}
+                    </Message>
                   </div>
-                </form>
-                <div className="my-3">
-                  <Message variant={"alert-warning"}>
-                    Please{" "}
-                    <Link to="/login">
-                      "<strong>Login</strong>"
-                    </Link>{" "}
-                    to write a review{" "}
-                  </Message>
-                </div>
+                )}
               </div>
             </div>
           </>

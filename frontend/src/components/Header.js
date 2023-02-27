@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   FaPhone,
@@ -13,14 +13,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/UserActions";
 
 const Header = () => {
-  const dispatch= useDispatch();
+  const [keyword, setKeyword] = useState("");
+  const history = useNavigate();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const logoutHandler=(e)=>{
+  const logoutHandler = (e) => {
     dispatch(logout());
-  }
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if(keyword.trim()){
+      history(`/search/${keyword}`);
+    }else {
+      history('/');
+    }
+  };
   return (
     <div>
       <nav className="navbar">
@@ -85,8 +95,11 @@ const Header = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link className="dropdown-item" to="#"
-                          onClick={logoutHandler}>
+                          <Link
+                            className="dropdown-item"
+                            to="#"
+                            onClick={logoutHandler}
+                          >
                             Logout
                           </Link>
                         </li>
@@ -128,11 +141,13 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
-                  <form className="input-group">
+                  <form className="input-group" onSubmit={submitHandler} >
                     <input
                       type="search"
                       className="form-control rounded search"
                       placeholder="Search"
+                      onChange={(e)=>setKeyword(e.target.value)}
+                      value={keyword}
                     />
                     <button type="submit" className="search-button">
                       search
@@ -150,11 +165,13 @@ const Header = () => {
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
-                <form className="input-group">
+                <form onSubmit={submitHandler} className="input-group">
                   <input
                     type="search"
                     className="form-control rounded search"
                     placeholder="Search"
+                    onChange={(e)=>setKeyword(e.target.value)}
+                    value={keyword}
                   ></input>
                   <button type="submit" className="search-button">
                     search
@@ -182,8 +199,11 @@ const Header = () => {
                         Profile
                       </Link>
 
-                      <Link className="dropdown-item" to="#"
-                      onClick={logoutHandler}>
+                      <Link
+                        className="dropdown-item"
+                        to="#"
+                        onClick={logoutHandler}
+                      >
                         Logout
                       </Link>
                     </div>

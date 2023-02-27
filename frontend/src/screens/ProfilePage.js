@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import ProfileTabs from "../components/profileComponents/ProfileTables";
 import Orders from "../components/profileComponents/Orders";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../Redux/Actions/UserActions";
+import moment from "moment";
+import { listMyOrders } from "../Redux/Actions/OrderActions";
 
 const ProfilePage = () => {
   window.scrollTo(0, 0);
+
+  const dispach = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const orderListMy = useSelector((state) => state.orderListMy);
+  const { loading,error,orders } = orderListMy;
+
+  useEffect(()=>{
+    dispach(getUserDetails("profile"));
+    dispach(listMyOrders());
+  },[dispach]);
 
   return (
     <>
@@ -13,22 +29,24 @@ const ProfilePage = () => {
         <div className="row align-items-start d-flex justify-content-between">
           <div className="col-lg-4 p-0 shadow">
             <div className="author-card pb-0 pb-md-3">
-              <div className="author-card-cover">
-              </div>
-                <div className="author-card-profile row">
-                  <div className="author-card-avatar col-md-5">
-                    <img src="https://th.bing.com/th/id/R.1f50774ba6657e78fb80b2268ebbffa7?rik=v%2fA1aFUv5qRwog&pid=ImgRaw&r=0" alt="userprofileimage" />
-                  </div>
-                  <div className="author-card-details col-md-7">
-                    <h5 className="author-card-name mb-2">
-                      <strong>Admin Doe</strong>
-                    </h5>
-                    <span className="author-card-position">
-                      <>Joined Dec 2000</>
-                    </span>
-                  </div>
+              <div className="author-card-cover"></div>
+              <div className="author-card-profile row">
+                <div className="author-card-avatar col-md-5">
+                  <img
+                    src="https://th.bing.com/th/id/R.1f50774ba6657e78fb80b2268ebbffa7?rik=v%2fA1aFUv5qRwog&pid=ImgRaw&r=0"
+                    alt="userprofileimage"
+                  />
                 </div>
-              
+                <div className="author-card-details col-md-7">
+                  <h5 className="author-card-name mb-2">
+                    <strong>{userInfo.name}</strong>
+                  </h5>
+                  <span className="author-card-position">
+                    <>Joined {moment(userInfo.createdAt).format('LL')}</>
+                  </span>
+                </div>
+              </div>
+
               <div className="wizard pt-3">
                 <div className="d-flex align-items-start">
                   <div
@@ -60,7 +78,7 @@ const ProfilePage = () => {
                       aria-selected="false"
                     >
                       Orders List
-                      <span className="badge2">3</span>
+                      <span className="badge2">{orders? orders.length: 0}</span>
                     </button>
                   </div>
                 </div>
@@ -85,7 +103,7 @@ const ProfilePage = () => {
               aria-labelledby="v-pills-profile-tab"
               role="tabpanel"
             >
-              <Orders />
+              <Orders orders={orders} loading={loading} error={error} />
             </div>
           </div>
         </div>

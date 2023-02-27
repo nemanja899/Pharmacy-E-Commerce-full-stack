@@ -8,14 +8,14 @@ import { listProduct } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 
-const ShopSection = () => {
+const ShopSection = (props) => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
-
+  const { loading, error, products, page, pages } = productList;
+  const { keyword, pageNumber } = props;
   useEffect(() => {
-    dispatch(listProduct());
-  }, [dispatch]);
+    dispatch(listProduct(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
@@ -63,7 +63,11 @@ const ShopSection = () => {
                   </>
                 )}
 
-                <Pagination />
+                <Pagination
+                  page={page}
+                  pages={pages}
+                  keyword={keyword ? keyword : ""}
+                />
               </div>
             </div>
           </div>
