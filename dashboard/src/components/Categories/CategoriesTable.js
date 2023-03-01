@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CategoriesPage from "../../pages/CategoriesPage";
 
-const categoriesTable = () => {
+const CategoriesTable = () => {
   <div className="col-md-12 col-lg-8">
     <table className="table">
       <thead>
@@ -43,4 +42,4 @@ const categoriesTable = () => {
   </div>;
 };
 
-export default CategoriesPage;
+export default CategoriesTable;

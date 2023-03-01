@@ -1,8 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "./responsive.css";
-import "react-toastify/dist/ReactToasify.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import CategoriesPage from "./pages/CategoriesPage";
@@ -13,24 +12,31 @@ import UsersPage from "./pages/UsersPage";
 import ProductEditPage from "./pages/ProductEdditPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
-
+import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="/category" element={<CategoriesPage />} />
-          <Route path="/orders" element={<OrderPage />} />
-          <Route path="/order" element={<OrderDetailPage />} />
-          <Route path="/addproduct" element={<AddProductPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/product/:id/edit" element={<ProductEditPage />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/products" element={<PrivateRoute><ProductPage /></PrivateRoute>} />
+          <Route path="/category" element={<PrivateRoute><CategoriesPage /></PrivateRoute>} />
+          <Route path="/orders" element={<PrivateRoute><OrderPage /></PrivateRoute>} />
+          <Route path="/order" element={<PrivateRoute><OrderDetailPage /></PrivateRoute>} />
+          <Route path="/addproduct" element={<PrivateRoute><AddProductPage /></PrivateRoute>} />
+          <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
+          <Route path="/product/:id/edit" element={<PrivateRoute><ProductEditPage /></PrivateRoute>} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="/*" element={<PrivateRoute><NotFound /></PrivateRoute>} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }

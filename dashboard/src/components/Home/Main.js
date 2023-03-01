@@ -1,7 +1,7 @@
 import React from "react";
 import TopTotal from "./TopTotal";
-import LatestOrder from "./LatestOrder";
-import SaleStatistics from "./SaleStatistics";
+//import LatestOrder from "./LatestOrder";
+import SalesStatistics from "./SalesStatistics";
 import ProductsStatistics from "./ProductsStatistics";
 
 const Main = () => {
@@ -13,11 +13,11 @@ const Main = () => {
         </div>
         <TopTotal></TopTotal>
         <div className="row">
-          <SaleStatistics></SaleStatistics>
+          <SalesStatistics></SalesStatistics>
           <ProductsStatistics></ProductsStatistics>
         </div>
         <div className="card mb-4 shadow-sm">
-          <LatestOrder></LatestOrder>
+        {/* // <LatestOrder></LatestOrder> */}
         </div>
       </section>
     </>

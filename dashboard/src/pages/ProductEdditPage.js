@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import EditProductMain from "../components/products/EdditProduct";
+import EditProductMain from "../components/products/EditProductMain";
 
 const ProductEditPage = () => {
   return (
