@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar";
 const HomePage = () => {
   return (
     <>
-      <Sidebar />
+      <Sidebar active="home"/>
       <main className="main-wrap">
         <Header />
         <Main></Main>

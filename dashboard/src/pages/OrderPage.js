@@ -7,9 +7,9 @@ const OrderPage = () => {
   return (
     <>
       <Sidebar />
-      <main className="main*wrap">
+      <main className="main-wrap">
         <Header />
-        <OrderMain />
+        <OrderMain  />
       </main>
     </>
   );

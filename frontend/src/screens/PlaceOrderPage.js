@@ -55,6 +55,7 @@ const PlaceOrderPage = () => {
         itemsPrice: cart.itemsPrice,
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
+        shippingPrice:cart.shippingPrice
       })
     );
   };

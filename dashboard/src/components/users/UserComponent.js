@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { listUsers } from "../../Redux/Actions/UserActions";
+import Message from "../LoadingError/Error";
+import Loading from "../LoadingError/Loading";
 
 const UserComponent = () => {
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.userList);
+  const { loading, error, users } = userList;
+
+  useEffect(() => {
+    dispatch(listUsers());
+  }, [dispatch]);
+
   return (
     <section className="content-main">
       <div className="content-header">
@@ -40,48 +52,59 @@ const UserComponent = () => {
           </div>
         </header>
         <div className="card-body">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-            <div className="col">
-              <div className="card card-user shadow-sm">
-                <div className="card-header">
-                  <img
-                    className="img-md img-avatar"
-                    alt="Admin"
-                    src="https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433__480.png"
-                  />
-                </div>
-                <div className="card-body">
-                  <h5 className="card-title mt-5"></h5>
-                  <div className="card-text text-muted">
-                    <p className="m-0"></p>
-                    <p>
-                      <a href={`mailto:`}></a>
-                    </p>
+          {loading ? (
+            <Loading></Loading>
+          ) : error ? (
+            <Message variant="alert-danger">{error}</Message>
+          ) : (
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+              {users.map((user) => (
+                <div className="col" key={user._id}>
+                  <div className="card card-user shadow-sm">
+                    <div className="card-header">
+                      <img
+                        className="img-md img-avatar"
+                        alt={user.isAdmin ? "Admin" : "User"}
+                        src={
+                          user.isAdmin
+                            ? "https://th.bing.com/th/id/R.9d55df45efd4433821fd7c19179b104b?rik=amxhZ%2fSwil5pLQ&pid=ImgRaw&r=0"
+                            : `https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433__480.png`
+                        }
+                      />
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title mt-5">{user.name}</h5>
+                      <div className="card-text text-muted">
+                        {user.isAdmin ? (
+                          <p className="m-0">Admin</p>
+                        ) : (
+                          <p className="m-0">Customer</p>
+                        )}
+
+                        <p>
+                          <a href={`mailto:${user.email}`}>{user.email}</a>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <div className="col">
-              <div className="card card-user shadow-sm">
-                <div className="card-header">
-                  <img
-                    className="img-md img-avatar"
-                    alt="User"
-                    src="https://th.bing.com/th/id/R.9d55df45efd4433821fd7c19179b104b?rik=amxhZ%2fSwil5pLQ&pid=ImgRaw&r=0"
-                  />{" "}
-                </div>
-                <div className="card-body">
-                  <h5 className="card-title mt-5"></h5>
-                  <div className="card-text text-muted">
-                    <p className="m-0"></p>
-                    <p>
-                      <a href={`mailto:`}></a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          )}
+          <nav className="float-end mt-4" aria-label="Page navigation">
+            <ul className="pagination">
+              <li className="page-item disabled">
+                <Link to="" className="page-link">
+                  Previous
+                </Link>
+              </li>
+              <li className="page-item active">
+                <Link to="" className="page-link">
+                  1
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </section>

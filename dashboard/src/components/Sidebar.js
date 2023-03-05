@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div>
       <aside className="navbar-aside" id="offcanvas_aside">
@@ -24,10 +24,8 @@ const Sidebar = () => {
           <ul className="menu-aside">
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="home" ?"active":""}`}
                 to="/"
-                exact={true}
               >
                 <i className="icon fas fa-home"></i>
                 <span className="text">Dashboard</span>
@@ -35,10 +33,8 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="products" ?"active":""}`}
                 to="/products"
-                exact={true}
               >
                 <i className="icon fas fa-shopping-bag"></i>
                 <span className="text">Products</span>
@@ -46,10 +42,8 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="addproducts" ?"active":""}`}
                 to="/addproduct"
-                exact={true}
               >
                 <i className="icon fas fa-cart-plus"></i>
                 <span className="text">Add product</span>
@@ -57,10 +51,8 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="category" ?"active":""}`}
                 to="/category"
-                exact={true}
               >
                 <i className="icon fas fa-list"></i>
                 <span className="text">Categories</span>
@@ -68,21 +60,17 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="orders" ?"active":""}`}
                 to="/orders"
-                exact={true}
               >
-                <i className="icon fas fa-bags-shopping"></i>
+                <i className="icon fa fa-shopping-bag"></i>
                 <span className="text">Orders</span>
               </NavLink>
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="users" ?"active":""}`}
                 to="/users"
-                exact={true}
               >
                 <i className="icon fas fa-user"></i>
                 <span className="text">Users</span>
@@ -90,10 +78,8 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
-                className="menu-link"
+                className={`menu-link ${props.active==="sellers" ?"active":""}`}
                 to="/sellers"
-                exact={true}
               >
                 <i className="icon fas fa-store-alt"></i>
                 <span className="text">Sellers</span>
@@ -101,12 +87,10 @@ const Sidebar = () => {
             </li>
             <li className="menu-item">
               <NavLink
-                activeClassName="active"
                 className="menu-link disabled"
                 to="/transaction"
-                exact={true}
               >
-                <i className="icon fas fa-shopping-bag"></i>
+                <i className="icon fa fa-university"></i>
                 <span className="text">Transactions</span>
               </NavLink>
             </li>

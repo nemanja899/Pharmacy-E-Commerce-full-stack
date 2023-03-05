@@ -6,7 +6,7 @@ import MainProducts from "./../components/products/MainProducts";
 const ProductPage = () => {
   return (
     <>
-      <Sidebar />
+      <Sidebar active="products" />
       <main className="main-wrap">
         <Header />
         <MainProducts />

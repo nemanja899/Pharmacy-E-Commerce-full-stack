@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../Redux/Actions/UserActions";
 
 const Header = () => {
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     $("[data-triger]").on("click", function (e) {
@@ -25,9 +25,9 @@ const Header = () => {
     });
   }, []);
 
-  const logoutHandler=()=>{
+  const logoutHandler = () => {
     dispatch(logout());
-  }
+  };
   return (
     <header className="main-header navbar">
       <div className="col-search">
@@ -74,7 +74,9 @@ const Header = () => {
               to="#"
               className={`dropdown-toggle`}
               data-bs-toggle="dropdown"
-              title="Dark mode"
+              id="dropdownMenuLink"
+              role="button"
+              aria-expanded="false"
             >
               <img
                 src="https://static-admin-dashboard-example.netlify.app/images/favicon.png"
@@ -82,20 +84,22 @@ const Header = () => {
                 alt="User"
               />
             </Link>
+
+            <div
+              className="dropdown-menu dropdown-menu-end"
+              aria-labelledby="dropdownMenuLink"
+            >
+              <Link to="#" className={`dropdown-item`}>
+                My Profile
+              </Link>
+              <Link to="#" className={`dropdown-item`}>
+                Settings
+              </Link>
+              <Link onClick={logoutHandler} to="#" className={`dropdown-item`}>
+                Exit
+              </Link>
+            </div>
           </li>
-          <div className="dropdown-menu dropdown-menu-end">
-            <Link to="#" className={`dropdown-item`}>
-              My Profile
-            </Link>
-            <Link to="#" className={`dropdown-item`}>
-              Settings
-            </Link>
-            <Link onClick={logoutHandler} to="#" className={`dropdown-item`}>
-              Exit
-            </Link>
-          </div>
-          
-          
         </ul>
       </div>
     </header>

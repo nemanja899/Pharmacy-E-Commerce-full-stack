@@ -29,7 +29,7 @@ function App() {
           <Route path="/products" element={<PrivateRoute><ProductPage /></PrivateRoute>} />
           <Route path="/category" element={<PrivateRoute><CategoriesPage /></PrivateRoute>} />
           <Route path="/orders" element={<PrivateRoute><OrderPage /></PrivateRoute>} />
-          <Route path="/order" element={<PrivateRoute><OrderDetailPage /></PrivateRoute>} />
+          <Route path="/order/:id" element={<PrivateRoute><OrderDetailPage /></PrivateRoute>} />
           <Route path="/addproduct" element={<PrivateRoute><AddProductPage /></PrivateRoute>} />
           <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
           <Route path="/product/:id/edit" element={<PrivateRoute><ProductEditPage /></PrivateRoute>} />

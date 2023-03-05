@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import protect from "../Middleware/AuthMiddleware.js";
+import { protect, admin } from "../Middleware/AuthMiddleware.js";
 import Order from "../Models/Order.js";
 
 const orderRouter = express.Router();
@@ -41,13 +41,27 @@ orderRouter.post(
   })
 );
 
+//Admin all orders
+orderRouter.get(
+  "/all",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate("user", "_id name email");
+    if (!orders) {
+      res.status(404);
+      throw new Error("There are no orders");
+    }
+    res.json(orders);
+  })
+);
+
 //order details
 orderRouter.get(
   "/:id",
   protect,
   asyncHandler(async (req, res) => {
     const id = req.params.id;
-    console.log("daaaaa");
     const order = await Order.findById(id).populate("user", "name email");
     if (order) {
       res.json(order);
@@ -91,9 +105,27 @@ orderRouter.get(
   protect,
   asyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
-   
-      res.json(orders);
-  
+
+    res.json(orders);
+  })
+);
+
+orderRouter.put(
+  "/:id/delivered",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const {id}= req.params;
+    console.log("aaaaaaaa");
+    const order= await  Order.findById(id);
+    
+    if(order){
+      order.isDelivered=true;
+      await order.save();
+      res.json("Order is delivered");
+    }else{
+      res.status(404).json("Order not found");
+    }
   })
 );
 

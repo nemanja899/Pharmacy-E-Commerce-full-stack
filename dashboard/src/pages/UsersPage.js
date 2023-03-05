@@ -6,7 +6,7 @@ import UserComponent from "../components/users/UserComponent";
 const UsersPage = () => {
   return (
     <>
-      <Sidebar />
+      <Sidebar active="users"/>
       <main className="main-wrap">
         <Header />
         <UserComponent />
